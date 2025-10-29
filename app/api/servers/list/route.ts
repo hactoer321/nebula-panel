@@ -7,4 +7,3 @@ export async function GET() {
   const { data } = await supabase.from("servers").select("*").eq("owner_discord_id", owner);
   return NextResponse.json(data ?? []);
 }
-a
