@@ -10,5 +10,20 @@ const handler = NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
+  callbacks: {
+    async jwt({ token, account, profile }) {
+      if (account && profile) {
+        // @ts-ignore
+        token.discord_id = profile.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // @ts-ignore
+      session.discord_id = token.discord_id;
+      return session;
+    }
+  }
 });
+
 export { handler as GET, handler as POST };
